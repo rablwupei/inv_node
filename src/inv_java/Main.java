@@ -19,6 +19,7 @@ public class Main {
 
 		Person person = (Person) g.fromJson("{\"name\": \"John\"}", Person.class);
 		System.out.println(person.name); //John
+//		System.out.println(person.name); //John
 
 		System.out.println(g.toJson(person)); // {"name":"John"}
 	}
