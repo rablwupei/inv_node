@@ -17,7 +17,7 @@ public class Main {
 		
 		Gson g = new Gson();
 
-		Person person = (Person) g.fromJson("{\"name\": \"John\"}", Person.class);
+		Person person = g.fromJson("{\"name\": \"John\"}", Person.class);
 		System.out.println(person.name); //John
 //		System.out.println(person.name); //John
 
