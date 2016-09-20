@@ -30,7 +30,7 @@ public class Message {
 			final HttpGet request1 = new HttpGet(gettokenUrl);
 	        Future<HttpResponse> future = Manager.httpclient.execute(request1, null);
 	        HttpResponse response1 = future.get();
-	        String body = EntityUtils.toString(response1.getEntity());
+	        String body = EntityUtils.toString(response1.getEntity(), "UTF-8");
 	        System.out.println(new Date() + " " +  body);
 			
 	        HashMap<String, Object> map = gson.fromJson(body, HashMap.class);
@@ -71,7 +71,7 @@ public class Message {
             request1.setHeader("Content-type", "application/json");
 	        Future<HttpResponse> future = Manager.httpclient.execute(request1, null);
 	        HttpResponse response1 = future.get();
-	        String body = EntityUtils.toString(response1.getEntity());
+	        String body = EntityUtils.toString(response1.getEntity(), "UTF-8");
 	        System.out.println(new Date() + " " +  body);
 	        
         }

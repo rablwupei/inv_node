@@ -65,7 +65,7 @@ public class Manager {
 		final HttpGet request1 = new HttpGet("http://hq.sinajs.cn/list=sz131810");
         Future<HttpResponse> future = httpclient.execute(request1, null);
         HttpResponse response1 = future.get();
-        String body = EntityUtils.toString(response1.getEntity());
+        String body = EntityUtils.toString(response1.getEntity(), "UTF-8");
         System.out.println(new Date() + " " +  body);
         
 		try {
