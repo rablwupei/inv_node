@@ -15,12 +15,15 @@ import org.apache.http.impl.nio.client.CloseableHttpAsyncClient;
 import org.apache.http.impl.nio.client.HttpAsyncClients;
 import org.apache.http.util.EntityUtils;
 
+import inv_java.weixin.Message;
+
 public class Manager {
 	
-    private static ScheduledExecutorService scheduler;
-    private static CloseableHttpAsyncClient httpclient;
+    public static ScheduledExecutorService scheduler;
+    public static CloseableHttpAsyncClient httpclient;
 	
 	public static void start() {
+		printMessage("inv v1.0.0");
 		scheduler = Executors.newScheduledThreadPool(1);
 		httpclient = HttpAsyncClients.createDefault();
         httpclient.start();
@@ -34,7 +37,7 @@ public class Manager {
 			public void run() {
 				onTick();
 			}
-		}, 1, 1, TimeUnit.SECONDS);
+		}, 1, 100000, TimeUnit.SECONDS);
 		printMessage("start timer");
 	}
 	
@@ -62,7 +65,16 @@ public class Manager {
 		final HttpGet request1 = new HttpGet("http://hq.sinajs.cn/list=sz131810");
         Future<HttpResponse> future = httpclient.execute(request1, null);
         HttpResponse response1 = future.get();
-        System.out.println(new Date() + " " +  EntityUtils.toString(response1.getEntity()));
+        String body = EntityUtils.toString(response1.getEntity());
+        System.out.println(new Date() + " " +  body);
+        
+		try {
+			new Message().send(body);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
+	
+	
 
 }
