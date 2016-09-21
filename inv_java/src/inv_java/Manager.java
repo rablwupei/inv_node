@@ -1,51 +1,44 @@
 package inv_java;
 
-import java.util.Date;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apache.commons.io.output.ThresholdingOutputStream;
-import org.apache.commons.logging.Log;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.LogFactory;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.util.EntityUtils;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import inv_java.tools.Http;
 import inv_java.weixin.Message;
 
 public class Manager {
-	
-    public static ScheduledExecutorService scheduler;
-    private static Log log;
-    
-    public static void start() {
-    	log = LogFactory.getLog(Manager.class);
-		scheduler = Executors.newScheduledThreadPool(1);
+
+	public static void start(String[] args) {
+		app.init(args);
 		
-		log("inv v1.0.0");
+//		startTimer();
 		
-		startTimer();
+		try {
+			String json = IOUtils.toString(app.listFile.toURI(), "UTF-8");
+			Gson gson = new GsonBuilder().setLenient().create();
+			app.log(gson.toJson(gson.fromJson(json, Object.class)));
+		} catch (Exception e) {
+			app.logError(e, "json read error");
+		}
 	}
 	
 	public static void startTimer() {
-		scheduler.scheduleWithFixedDelay(new Runnable() {
+		app.scheduler.scheduleWithFixedDelay(new Runnable() {
 			@Override
 			public void run() {
 				onTick();
 			}
 		}, 1, 100000, TimeUnit.SECONDS);
-		log("start timer");
-	}
-	
-	public static void log(String msg) {
-		log.info(msg);
-	}
-	
-	public static void logError(String msg, Throwable t) {
-		log.error(msg, t);
+		app.log("start timer");
 	}
 	
 	public static void onTick() {
@@ -53,14 +46,6 @@ public class Manager {
 	}
 	
 	public static void sendRequest() {
-		try {
-			doSendRequest();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void doSendRequest() throws Exception {
         String body = new Http("http://hq.sinajs.cn/list=sz131810").getBody();
 		new Message(body).send();
 	}

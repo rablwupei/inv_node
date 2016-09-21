@@ -23,6 +23,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import inv_java.Manager;
+import inv_java.app;
 
 public class Http {
 	
@@ -36,7 +37,7 @@ public class Http {
 		        client.start();
 		        httpclient = client;
 			} catch (Exception e) {
-				Manager.logError("httpclear create error", e);
+				app.logError(e, "httpclear create error");
 			}
 		}
 		return httpclient;
@@ -75,7 +76,7 @@ public class Http {
 		try {
 			return doExecute();
 		} catch (Exception e) {
-			Manager.logError("http error. url = " + url, e);
+			app.logError(e, "http error. url = " + url);
 			return null;
 		}
 	}
@@ -104,9 +105,9 @@ public class Http {
         HttpResponse response1 = future.get();
         String body = EntityUtils.toString(response1.getEntity(), "UTF-8");
 		if (StringUtils.isEmpty(post)) {
-	        Manager.log(url + "\n" + body);
+	        app.log(url + "\n" + body);
 		} else {
-	        Manager.log(url + "\n" + post + "\n" + body);
+			app.log(url + "\n" + post + "\n" + body);
 		}
         return body;
 	}

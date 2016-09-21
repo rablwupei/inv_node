@@ -1,0 +1,28 @@
+{
+	"interval" : 5,
+	"subject" : {
+		"subject-1" : {
+			"url" : "http://hq.sinajs.cn/list=sh601006",
+			"type" : "sina",
+			"param1" : "",
+			"param2" : "",
+			"param3" : ""
+		},
+		"subject-2" : {
+			"url" : "http://hq.sinajs.cn/list=sz131810",
+			"type" : "sina",
+			"param1" : "",
+			"param2" : "",
+			"param3" : ""
+		}
+	},
+	"condition" : {
+		"cond-1" : {
+			"type" : ""
+		},
+		"cond-2" : {
+			
+		}
+
+	}
+}
