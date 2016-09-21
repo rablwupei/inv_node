@@ -1,28 +1,39 @@
 {
-	"interval" : 5,
 	"subject" : {
 		"subject-1" : {
 			"url" : "http://hq.sinajs.cn/list=sh601006",
-			"type" : "sina",
-			"param1" : "",
-			"param2" : "",
-			"param3" : ""
+			"type" : "sina"
 		},
 		"subject-2" : {
 			"url" : "http://hq.sinajs.cn/list=sz131810",
-			"type" : "sina",
-			"param1" : "",
-			"param2" : "",
-			"param3" : ""
+			"type" : "sina"
 		}
 	},
 	"condition" : {
 		"cond-1" : {
-			"type" : ""
+			"type" : "<"
 		},
 		"cond-2" : {
-			
+			"type" : ">"
 		}
-
+	},
+	"process" : {
+		"proc-1" : {
+			"interval" : 5,
+			"conds" : [
+				{
+					"des" : "第一种形式在这里表达",
+					"cond" : "cond-1",
+					"left" : "${subject-1}",
+					"right" : "5"
+				},
+				{
+					"des" : "第二种形式这样表达,下面这样比较好,肯定是",
+					"cond" : "${subject-2}.price < 5"
+				}
+			],
+			"message" : "condition down~",
+			"touser" : "@all"
+		}
 	}
 }
