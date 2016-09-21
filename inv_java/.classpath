@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="libs/httpcore-4.4.5.jar"/>
 	<classpathentry kind="lib" path="libs/httpcore-nio-4.4.5.jar"/>
 	<classpathentry kind="lib" path="libs/commons-io-2.5.jar"/>
+	<classpathentry kind="lib" path="libs/commons-lang3-3.4.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
