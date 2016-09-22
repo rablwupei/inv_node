@@ -6,6 +6,11 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.jexl3.JexlBuilder;
+import org.apache.commons.jexl3.JexlContext;
+import org.apache.commons.jexl3.JexlEngine;
+import org.apache.commons.jexl3.JexlExpression;
+import org.apache.commons.jexl3.MapContext;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -15,12 +20,6 @@ import inv_java.weixin.Message;
 
 public class Manager {
 	
-	public static int sum(int a, int b)
-	{
-		return a + b;
-	}
-	
-
 	public static void start(String[] args) {
 		app.init(args);
 		
@@ -34,34 +33,35 @@ public class Manager {
 			app.logError(e, "json read error");
 		}
 		
-		app.log("abcc");
+		System.out.println("abcc");
 		try {
-			ScriptEngineManager engineManager = new ScriptEngineManager();
-			ScriptEngine engine = engineManager.getEngineByName("nashorn");
+			long time;
+			int count = 100;
 
-			long time = System.currentTimeMillis();
-			for (int i = 0; i < 50000; i++) {
-				engine.eval("function sum(a,b) { return a+b; }");
-				engine.eval("sum(1,2);");
+			{
+				time = System.currentTimeMillis();
+				for (int i = 0; i < count; i++) {
+					int a = 1 + 2;
+				}
+				System.out.println("java: " + (System.currentTimeMillis() - time) / 1000.0);
 			}
-			System.out.println((System.currentTimeMillis() - time) / 1000.0);
-			
-			time = System.currentTimeMillis();
-			for (int i = 0; i < 50000; i++) {
-				sum(1, 2);
-			}
-			System.out.println((System.currentTimeMillis() - time) / 1000.0);
 
-			time = System.currentTimeMillis();
-			for (int i = 0; i < 50000; i++) {
+			{
+				ScriptEngineManager engineManager = new ScriptEngineManager();
+				ScriptEngine engine = engineManager.getEngineByName("nashorn");
+				System.out.println(engine.eval("1+2;"));
 
+				time = System.currentTimeMillis();
+				for (int i = 0; i < count; i++) {
+					Object o = engine.eval("1+2;");
+				}
+				System.out.println("nashorn: " + (System.currentTimeMillis() - time) / 1000.0);
 			}
-			System.out.println((System.currentTimeMillis() - time) / 1000.0);
 			
 		} catch (Exception e) {
 			app.logError(e, "js error");
 		}
-		app.log("abcc2");
+		System.out.println("abcc2");
 	}
 	
 	public static void startTimer() {
