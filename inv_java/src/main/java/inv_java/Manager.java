@@ -6,11 +6,6 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.jexl3.JexlBuilder;
-import org.apache.commons.jexl3.JexlContext;
-import org.apache.commons.jexl3.JexlEngine;
-import org.apache.commons.jexl3.JexlExpression;
-import org.apache.commons.jexl3.MapContext;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -21,22 +16,16 @@ import inv_java.weixin.Message;
 public class Manager {
 	
 	public static void start(String[] args) {
-		app.init(args);
-		
-//		startTimer();
-		
-		try {
-			String json = IOUtils.toString(app.listFile.toURI(), "UTF-8");
-			Gson gson = new GsonBuilder().setLenient().create();
-			app.log(gson.toJson(gson.fromJson(json, Object.class)));
-		} catch (Exception e) {
-			app.logError(e, "json read error");
+		if (!app.init(args)) {
+            return;
 		}
 		
+//		startTimer();
+
 		System.out.println("abcc");
 		try {
 			long time;
-			int count = 100;
+			int count = 100000;
 
 			{
 				time = System.currentTimeMillis();
