@@ -8,3 +8,7 @@
 /inv_java/.idea/libraries
 /inv_java/build
 /inv_java/captures
+
+/inv_js/**/*.iml
+/inv_js/.idea/workspace.xml
+/inv_js/.idea/tasks.xml
