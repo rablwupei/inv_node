@@ -1,1 +1,10 @@
-/inv_java/build/
+
+.DS_Store
+
+/inv_java/*.iml
+/inv_java/.gradle
+/inv_java/local.properties
+/inv_java/.idea/workspace.xml
+/inv_java/.idea/libraries
+/inv_java/build
+/inv_java/captures
