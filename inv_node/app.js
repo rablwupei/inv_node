@@ -1,3 +1,2 @@
 
-console.log("hello")
-
+require('./inv').start();
