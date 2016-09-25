@@ -7,15 +7,15 @@ var util = require('util');
 var utils = {};
 
 utils.log = function(data, ...params) {
-    if (typeof(data) == 'string') {
-        console.log(data, ...params);
-    } else {
-        console.log(util.inspect(data), ...params);
-    }
+    console.log(data, ...params);
 };
 
 utils.error = function(data, ...params) {
     console.error(data, ...params);
+};
+
+utils.dump = function (data) {
+    console.log(util.inspect(data));
 };
 
 module.exports = utils;
