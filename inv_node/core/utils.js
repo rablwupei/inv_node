@@ -18,4 +18,6 @@ utils.dump = function (data) {
     console.log(util.inspect(data));
 };
 
+utils.sprintf = require("sprintf-js").sprintf;
+
 module.exports = utils;

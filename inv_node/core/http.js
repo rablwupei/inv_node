@@ -38,7 +38,7 @@ http.get = function (url, option = {}) {
 http.post = function (url, post, option = {}) {
     option.body = post;
     option.method = 'POST';
-    return http.get(url, callback, option);
+    return http.get(url, option);
 };
 
 module.exports = http;
