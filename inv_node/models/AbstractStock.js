@@ -44,8 +44,8 @@ class AbstractStock {
     }
 
     toString() {
-        return sprintf("%s 当前:%f(%.2f%%) 最高:%f 最低:%f 时间:%s",
-            this.name, this.cur, this.percent * 100, this.low, this.high, this.time);
+        return sprintf("%s - %f (%.2f%%) %f - %f",
+            this.name, this.cur, this.percent * 100, this.low, this.high);
     }
 
 }

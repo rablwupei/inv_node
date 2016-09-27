@@ -21,7 +21,7 @@ class AbstractRunner {
     }
 
     get touser() {
-        return '@all';
+        return '@all'; //wupei|hanbihui
     }
 
     postMessage() {

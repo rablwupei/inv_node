@@ -5,5 +5,6 @@
 var config = {};
 
 config.default_interval = 5;
+config.debug = false;
 
 module.exports = config;

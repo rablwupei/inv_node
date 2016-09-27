@@ -13,18 +13,30 @@ class Runner1 extends AbstractRunner {
     }
 
     get message() {
-        return util.format('%s success', __filename);
+        return this._message;
     }
 
     get touser() {
-        return 'wupei'; //'@all';
+        return '@all'; //wupei|hanbihui
     }
 
     *run() {
+        this._message = "";
         var sina = require('../markets/sina');
-        var stocks = yield sina.get('sh601006,sh601005');
-        console.log(stocks[0].toString());
-        console.log(stocks[1].toString());
+        var stocks = yield sina.get('sz131810,sz131811,sz131800,sz131809,sz131801,sz131802,sz131803,sz131805,sz131806');
+        for (var i = 0; i < stocks.length; i++) {
+            var stock = stocks[i];
+            if (stock.cur > 10) {
+                if (this._message) {
+                    this._message = this._message + '\n' + stock.toString();
+                } else {
+                    this._message = stock.toString();
+                }
+            }
+        }
+        if (this._message) {
+            return true
+        }
         return false;
     }
 
