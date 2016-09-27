@@ -17,10 +17,11 @@ weixin.send = function (msg) {
     co(function* () {
         var txt = msg.message;
 
-        var gettokenUrl = util.format("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s", corpID, secret);
-        var body = yield http.get(gettokenUrl);
-        var access_token = JSON.parse(body).access_token;
-        assert(access_token, "access_token empty, body = %s", body);
+        // var gettokenUrl = util.format("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s", corpID, secret);
+        // var body = yield http.get(gettokenUrl);
+        // var access_token = JSON.parse(body).access_token;
+        // assert(access_token, "access_token empty, body = %s", body);
+        var access_token = "abc";
 
         var form = JSON.stringify({
             text : { content : txt },
@@ -33,6 +34,12 @@ weixin.send = function (msg) {
         });
         var msgUrl = util.format("https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=%s", access_token);
         var body = yield http.post(msgUrl, form);
+        var bodyJson = JSON.parse(body);
+        if (bodyJson.errcode == 40014) {
+
+        } else if (bodyJson.errcode == 0) {
+
+        }
         console.log(body);
 
     }).catch(function (err) {

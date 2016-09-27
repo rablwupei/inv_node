@@ -2,7 +2,7 @@
  * Created by wupei on 16/9/25.
  */
 
-var utils = require('../core/utils');
+var util = require('util');
 var AbstractRunner = require('../models/AbstractRunner');
 
 class Runner1 extends AbstractRunner {
@@ -10,6 +10,14 @@ class Runner1 extends AbstractRunner {
     constructor() {
         super();
 
+    }
+
+    get message() {
+        return util.format('%s success', __filename);
+    }
+
+    get touser() {
+        return 'wupei'; //'@all';
     }
 
     *run() {
