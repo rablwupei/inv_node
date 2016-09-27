@@ -11,7 +11,7 @@ utils.log('inv v1.0.0');
 
 config.default_interval = 5; //秒
 config.debug = true;
-config.sendMsg = true;
+config.sendMsg = false;
 
 var moment = require('moment');
 var _hasSend = {};
