@@ -1,8 +1,10 @@
 
-var fs = require('co-fs');
+var assert = require('assert');
 var co = require('co');
-var sleep = require('co-sleep')
-var assert = require('assert')
+var sleep = require('co-sleep');
+var fs = require('co-fs');
+var wrap = require('co-nedb');
+var db = require('./core/db');
 
 var utils = require('./core/utils');
 var config = require('./core/config');
@@ -12,20 +14,6 @@ utils.log('inv v1.0.0');
 config.default_interval = 5; //秒
 config.debug = true;
 config.sendMsg = false;
-
-var moment = require('moment');
-var _hasSend = {};
-var hasSend = function (key) {
-    var mo = _hasSend[key];
-    if (mo && !mo.diff(moment(), 'days')) {
-        return true;
-    }
-    return false;
-};
-
-var setSend = function (key) {
-    _hasSend[key] = moment();
-};
 
 var log = function (...args) {
     if (config.debug) {
@@ -38,19 +26,22 @@ var run = function* () {
     var files = yield fs.readdir(runnerPath);
     assert(files.length > 0, 'runners.length == 0');
 
+    db.init('./data.db');
+
     for (var i = 0; i < files.length; i++) {
         co(function* () {
             var path = runnerPath + '/' + files[i];
             while (true) {
                 var cls = require(path);
-                log("check: " + path);
                 var runner = new cls();
-                if (!hasSend(path)) {
+                var hasSend = yield db.hasSend(path);
+                log("check: " + path + ", hasSend: " + hasSend);
+                if (!hasSend) {
                     log("run: " + path);
                     var result = yield runner.run();
                     if (result) {
                         log("send: " + path);
-                        setSend(path);
+                        yield db.setSend(path);
                         runner.postMessage();
                     }
                 }
