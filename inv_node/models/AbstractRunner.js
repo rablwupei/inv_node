@@ -3,6 +3,7 @@
  */
 
 var util = require('util');
+var utils = require('../core/utils');
 var Message = require('./Message');
 var config = require('./../core/config');
 
@@ -25,7 +26,11 @@ class AbstractRunner {
     }
 
     postMessage() {
-        new Message(this).send();
+        if (config.sendMsg) {
+            new Message(this).send();
+        } else {
+            utils.log("[debug] sendMsg: " + this.message)
+        }
     }
 
     *run() {

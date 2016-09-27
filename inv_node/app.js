@@ -11,8 +11,21 @@ utils.log('inv v1.0.0');
 
 config.default_interval = 5; //秒
 config.debug = true;
+config.sendMsg = true;
 
-var hasSend = {};
+var moment = require('moment');
+var _hasSend = {};
+var hasSend = function (key) {
+    var mo = _hasSend[key];
+    if (mo && !mo.diff(moment(), 'days')) {
+        return true;
+    }
+    return false;
+};
+
+var setSend = function (key) {
+    _hasSend[key] = moment();
+};
 
 var log = function (...args) {
     if (config.debug) {
@@ -26,19 +39,18 @@ var run = function* () {
     assert(files.length > 0, 'runners.length == 0');
 
     for (var i = 0; i < files.length; i++) {
-        log("start file: " + files[i]);
         co(function* () {
             var path = runnerPath + '/' + files[i];
             while (true) {
                 var cls = require(path);
-                log("ready: " + path);
+                log("check: " + path);
                 var runner = new cls();
-                if (!hasSend[path]) {
-                    log("start: " + path);
+                if (!hasSend(path)) {
+                    log("run: " + path);
                     var result = yield runner.run();
                     if (result) {
-                        log("success: " + path);
-                        hasSend[path] = true;
+                        log("send: " + path);
+                        setSend(path);
                         runner.postMessage();
                     }
                 }
@@ -47,7 +59,6 @@ var run = function* () {
         }).catch(function(err) {
             utils.error(err);
         });
-        log("end file: " + files[i]);
     }
 };
 
