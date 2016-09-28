@@ -20,7 +20,7 @@ var logger = new winston.Logger({
             filename: './runners-error.log',
             level: 'error',
             json: false,
-            maxsize: 1024*1024*2,
+            maxsize: 1024*1024*5,
             'timestamp': function() { return moment().format('YYYY-MM-DD HH:mm:ss'); }
         })
     ]

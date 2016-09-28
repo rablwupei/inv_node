@@ -21,6 +21,7 @@ class Runner1 extends AbstractRunner {
     }
 
     *run() {
+        // return false;
         this._message = "";
         var sina = require('../markets/sina');
         var stocks = yield sina.get('sz131810,sz131811,sz131800,sz131809,sz131801,sz131802,sz131803,sz131805,sz131806');
@@ -35,7 +36,7 @@ class Runner1 extends AbstractRunner {
             }
         }
         if (this._message) {
-            return true
+            return true;
         }
         return false;
     }

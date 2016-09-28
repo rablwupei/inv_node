@@ -11,7 +11,8 @@ var config = require('./core/config');
 
 utils.log('inv v1.0.0');
 
-config.default_interval = 5; //秒
+config.default_interval = 10; //每10秒触发一次所有runner
+config.default_sendMsgRate = 60 * 5; //符合条件时5分钟发一次Message
 config.debug = true;
 config.sendMsg = false;
 

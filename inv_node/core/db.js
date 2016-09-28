@@ -6,6 +6,7 @@ var co = require('co');
 var moment = require('moment');
 var Datastore = require('nedb');
 var wrap = require('co-nedb');
+var config = require('./config');
 
 var db = {};
 var users = null;
@@ -17,7 +18,7 @@ db.init = function (path) {
 db.hasSend = function* (path) {
     var obj = yield users.findOne({ send: path });
     // console.log('hasSend', yield users.find({ }));
-    if (obj && !moment(obj.time).diff(moment(), 'days')) {
+    if (obj && moment().diff(moment(obj.time), 'seconds') < config.default_sendMsgRate) {
         return true;
     }
     return false;
