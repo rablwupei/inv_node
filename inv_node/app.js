@@ -26,27 +26,31 @@ var run = function* () {
     var files = yield fs.readdir(runnerPath);
     assert(files.length > 0, 'runners.length == 0');
 
-    db.init('./data.db');
+    db.init('./runners.db');
 
     for (var i = 0; i < files.length; i++) {
         co(function* () {
-            var path = runnerPath + '/' + files[i];
-            while (true) {
-                var cls = require(path);
-                var runner = new cls();
-                var hasSend = yield db.hasSend(path);
-                log("check: " + path + ", hasSend: " + hasSend);
-                if (!hasSend) {
-                    log("run: " + path);
-                    var result = yield runner.run();
-                    if (result) {
-                        log("send: " + path);
-                        yield db.setSend(path);
-                        runner.postMessage();
+                var path = runnerPath + '/' + files[i];
+                while (true) {
+                    try {
+                        var cls = require(path);
+                        var runner = new cls();
+                        var hasSend = yield db.hasSend(path);
+                        log("check: " + path + ", hasSend: " + hasSend);
+                        if (!hasSend) {
+                            log("run: " + path);
+                            var result = yield runner.run();
+                            if (result) {
+                                log("send: " + path);
+                                yield db.setSend(path);
+                                runner.postMessage();
+                            }
+                        }
+                    } catch (err) {
+                        utils.error(err);
                     }
+                    yield sleep(runner.interval*1000);
                 }
-                yield sleep(runner.interval*1000);
-            }
         }).catch(function(err) {
             utils.error(err);
         });

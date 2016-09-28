@@ -6,7 +6,6 @@ var co = require('co');
 var moment = require('moment');
 var Datastore = require('nedb');
 var wrap = require('co-nedb');
-var moment = require('moment');
 
 var db = {};
 var users = null;
