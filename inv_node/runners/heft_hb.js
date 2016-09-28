@@ -38,8 +38,8 @@ class Runner1 extends AbstractRunner {
                 this._message = utils.sprintf('%s(%s)折价超过%.2f%%啦, %s(%s), 偏离%.2f%%',
                     hb.name, hb.percentStr, offsetMax * 100, etf.name, etf.percentStr, Math.abs(offset * 100));
             } else {
-                this._message = utils.sprintf('%s(%s)折价超过%.2f%%啦, %s(%s), 偏离%.2f%%',
-                    etf.name, etf.percentStr, offsetMax * 100, hb.name, hb.percentStr, Math.abs(offset * 100));
+                // this._message = utils.sprintf('%s(%s)折价超过%.2f%%啦, %s(%s), 偏离%.2f%%',
+                //     etf.name, etf.percentStr, offsetMax * 100, hb.name, hb.percentStr, Math.abs(offset * 100));
             }
         }
         if (this._message) {
