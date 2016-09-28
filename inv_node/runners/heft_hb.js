@@ -32,17 +32,20 @@ class Runner1 extends AbstractRunner {
         var etf = stocks[0];
         var hb = stocks[1];
         var offset = etf.percent * 2 - hb.percent;
-        if (Math.abs(offset) > 0.005) {
+        var offsetMax = 0.005;
+        if (Math.abs(offset) > offsetMax) {
             if (etf.percent * 2 > hb.percent) {
-                this._message = utils.sprintf("%s 折价超过0.5%啦,对标%s", hb.name, etf.name);
+                this._message = utils.sprintf('%s(%s)折价超过%.2f%%啦, %s(%s), 偏离%.2f%%',
+                    hb.name, hb.percentStr, offsetMax * 100, etf.name, etf.percentStr, Math.abs(offset * 100));
             } else {
-                this._message = utils.sprintf("%s 折价超过0.5%啦,对标%s", etf.name, hb.name);
+                this._message = utils.sprintf('%s(%s)折价超过%.2f%%啦, %s(%s), 偏离%.2f%%',
+                    etf.name, etf.percentStr, offsetMax * 100, hb.name, hb.percentStr, Math.abs(offset * 100));
             }
         }
         if (this._message) {
-            return true
+            return true;
         }
-        return true;
+        return false;
     }
 
 }

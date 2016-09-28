@@ -43,6 +43,10 @@ class AbstractStock {
         return (this.cur / this.close - 1);
     }
 
+    get percentStr() {
+        return sprintf('%.2f%%', this.percent * 100);
+    }
+
     toString() {
         return sprintf("%s - %f (%.2f%%) %f - %f",
             this.name, this.cur, this.percent * 100, this.low, this.high);
