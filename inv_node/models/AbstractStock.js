@@ -6,8 +6,12 @@ var util = require('util');
 var sprintf = require("sprintf-js").sprintf
 
 class AbstractStock {
-    constructor() {
+    constructor(code) {
+        this._code = code;
+    }
 
+    get code() {
+        return this._code;
     }
 
     get name() {

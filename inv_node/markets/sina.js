@@ -5,8 +5,8 @@
 var AbstractStock = require('../models/AbstractStock')
 
 class SinaStock extends AbstractStock{
-    constructor() {
-        super();
+    constructor(code) {
+        super(code);
     }
 
     parse(text) {
@@ -14,32 +14,60 @@ class SinaStock extends AbstractStock{
     }
 
     get time() {
-        //return this.strs[30] + " " + this.strs[31];
-        return this.strs[31];
+        if (this.code.startsWith('hk')) {
+            return this.strs[18];
+        } else {
+            //return this.strs[30] + " " + this.strs[31];
+            return this.strs[31];
+        }
     }
 
     get name() {
-        return this.strs[0];
+        if (this.code.startsWith('hk')) {
+            return this.strs[1];
+        } else {
+            return this.strs[0];
+        }
     }
 
     get cur() {
-        return parseFloat(this.strs[3]);
+        if (this.code.startsWith('hk')) {
+            return parseFloat(this.strs[6]);
+        } else {
+            return parseFloat(this.strs[3]);
+        }
     }
 
     get high() {
-        return parseFloat(this.strs[4]);
+        if (this.code.startsWith('hk')) {
+            return parseFloat(this.strs[4]);
+        } else {
+            return parseFloat(this.strs[4]);
+        }
     }
 
     get low() {
-        return parseFloat(this.strs[5]);
+        if (this.code.startsWith('hk')) {
+            return parseFloat(this.strs[5]);
+        } else {
+            return parseFloat(this.strs[5]);
+        }
     }
 
     get open() {
-        return parseFloat(this.strs[1]);
+        if (this.code.startsWith('hk')) {
+            return parseFloat(this.strs[2]);
+        } else {
+            return parseFloat(this.strs[1]);
+        }
     }
 
     get close() {
-        return parseFloat(this.strs[2]);
+        if (this.code.startsWith('hk')) {
+            return parseFloat(this.strs[3]);
+        } else {
+            return parseFloat(this.strs[2]);
+        }
     }
 
 }
