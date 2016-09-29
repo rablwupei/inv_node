@@ -17,6 +17,10 @@ class AbstractRunner {
         return config.default_interval;
     }
 
+    get sendRate() {
+        return config.default_sendRate;
+    }
+
     get message() {
         return util.format('%s success', __filename);
     }

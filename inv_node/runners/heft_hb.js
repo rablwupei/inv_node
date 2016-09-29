@@ -21,8 +21,12 @@ class Runner1 extends AbstractRunner {
         return this._message;
     }
 
+    get sendRate() {
+        return 60;
+    }
+
     get touser() {
-        return '@all'; //wupei|hanbihui
+        return 'wupei'; //wupei|hanbihui
     }
 
     *run() {
@@ -32,14 +36,24 @@ class Runner1 extends AbstractRunner {
         var etf = stocks[0];
         var hb = stocks[1];
         var offset = etf.percent * 2 - hb.percent;
-        var offsetMax = 0.005;
+        var offsetMax = 0.05;
         if (Math.abs(offset) > offsetMax) {
-            if (etf.percent * 2 > hb.percent) {
-                this._message = utils.sprintf('%s(%s)折价超过%.2f%%啦, %s(%s), 偏离%.2f%%',
-                    hb.name, hb.percentStr, offsetMax * 100, etf.name, etf.percentStr, Math.abs(offset * 100));
-            } else {
-                // this._message = utils.sprintf('%s(%s)折价超过%.2f%%啦, %s(%s), 偏离%.2f%%',
-                //     etf.name, etf.percentStr, offsetMax * 100, hb.name, hb.percentStr, Math.abs(offset * 100));
+            if (etf.percent > 0 && hb.percent > 0) {
+                if (etf.percent * 2 > hb.percent) {   //(2%, 4%, 2.5%)
+                    this._message = utils.sprintf('卖出%s(%s)，买入%s(%s)，折价%.2f%%',
+                        etf.name, etf.percentStr, hb.name, hb.percentStr, Math.abs(offset * 100));
+                } else {  //(0.5%, 1%, 2.5%)
+                    this._message = utils.sprintf('卖出%s(%s)，买入%s(%s)，折价%.2f%%',
+                        hb.name, hb.percentStr, etf.name, etf.percentStr, Math.abs(offset * 100));
+                }
+            } else if (etf.percent < 0 && hb.percent < 0) {
+                if (etf.percent * 2 > hb.percent) {   //(-0.5%, -1%, -2.5%)
+                    this._message = utils.sprintf('卖出%s(%s)，买入%s(%s)，折价%.2f%%',
+                        etf.name, etf.percentStr, hb.name, hb.percentStr, Math.abs(offset * 100));
+                } else {   //(-2%, -4%, -2.5%)
+                    this._message = utils.sprintf('卖出%s(%s)，买入%s(%s)，折价%.2f%%',
+                        hb.name, hb.percentStr, etf.name, etf.percentStr, Math.abs(offset * 100));
+                }
             }
         }
         if (this._message) {

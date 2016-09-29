@@ -15,10 +15,10 @@ db.init = function (path) {
     users = wrap(new Datastore({ filename: path, autoload: true }));
 };
 
-db.hasSend = function* (path) {
+db.hasSend = function* (path, rate) {
     var obj = yield users.findOne({ send: path });
     // console.log('hasSend', yield users.find({ }));
-    if (obj && moment().diff(moment(obj.time), 'seconds') < config.default_sendMsgRate) {
+    if (obj && moment().diff(moment(obj.time), 'seconds') < rate) {
         return true;
     }
     return false;

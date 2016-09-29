@@ -14,7 +14,9 @@ winston.add(winston.transports.File, {
 var logger = new winston.Logger({
     level: 'info',
     transports: [
-        new (winston.transports.Console)(),
+        new (winston.transports.Console)({
+            'timestamp': function() { return moment().format('MM-DD HH:mm:ss'); }
+        }),
         new (winston.transports.File)({
             name: 'error-file',
             filename: './runners-error.log',

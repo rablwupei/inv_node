@@ -4,8 +4,9 @@
 
 var config = {};
 
-config.default_interval = 5;
-config.debug = false;
-config.sendMsg = true;
+config.debug = true;
+config.default_interval = 10; //每10秒触发一次所有runner
+config.default_sendRate = 60 * 5; //符合条件时5分钟发一次Message
+config.sendMsg = false;
 
 module.exports = config;
