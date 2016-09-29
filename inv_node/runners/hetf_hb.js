@@ -47,7 +47,7 @@ class Runner1 extends AbstractRunner {
 
         var offsetMax = 0.005;
 
-        if (Math.abs(hbOffset*0.5) > offsetMax || Math.abs(etfOffset) > offsetMax) {
+        if (Math.abs(hbOffset) > offsetMax || Math.abs(etfOffset) > offsetMax) {
             if (hbOffset > 0) { //hb便宜
                 this._message = utils.sprintf('买入%s(%s)，偏离%.2f%%。',
                     hb.name, hb.percentStr, Math.abs(hbOffset * 100));
