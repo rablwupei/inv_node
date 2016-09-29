@@ -25,7 +25,7 @@ db.hasSend = function* (path, rate) {
 };
 
 db.setSend = function* (path) {
-    yield users.update({ send: path }, { send: path, time: moment().toDate() }, { upsert : true });
+    yield users.update({ send: path }, { $set: { time: moment().toDate() }}, { upsert : true });
     // console.log('setSend', yield users.find({ }));
 };
 
