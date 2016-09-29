@@ -22,7 +22,7 @@ class Runner1 extends AbstractRunner {
     }
 
     get sendRate() {
-        return 60;
+        return super.sendRate;
     }
 
     get touser() {

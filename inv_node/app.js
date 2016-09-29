@@ -7,7 +7,7 @@ utils.log('inv v1.0.0');
 config.sendMsg = false;
 
 //如果runner内没有指定该参数，使用以下默认参数
-config.default_interval = 30; //默认每10秒触发一次所有runner
+config.default_interval = 30; //默认每30秒触发一次所有runner
 config.default_sendRate = 60 * 5; //默认符合条件时5分钟发一次Message
 
 //run start
@@ -46,7 +46,7 @@ var run = function* () {
                 } catch (err) {
                     utils.error(err);
                 }
-                yield sleep(runner.interval*1000);
+                yield sleep(runner.interval * 1000);
             }
         }).catch(function(err) {
             utils.error(err);
