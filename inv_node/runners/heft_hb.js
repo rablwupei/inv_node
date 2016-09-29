@@ -36,7 +36,7 @@ class Runner1 extends AbstractRunner {
         var etf = stocks[0];
         var hb = stocks[1];
         var offset = etf.percent * 2 - hb.percent;
-        var offsetMax = 0.05;
+        var offsetMax = 0.005;
         if (Math.abs(offset) > offsetMax) {
             if (etf.percent > 0 && hb.percent > 0) {
                 if (etf.percent * 2 > hb.percent) {   //(2%, 4%, 2.5%)
