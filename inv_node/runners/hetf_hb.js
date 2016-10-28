@@ -33,7 +33,7 @@ class Runner1 extends AbstractRunner {
         this._message = "";
 
         var sina = require('../markets/sina');
-        var stocks = yield sina.get('hkHSCEI,sh510900,sz150176');
+        var stocks = yield sina.get('hkHSCEI,sh510900,sz150176,sz150175');
         var base = stocks[0];
         var basePercent = base.percent;
         var basePercent2 = basePercent * 2;
@@ -41,6 +41,7 @@ class Runner1 extends AbstractRunner {
         var etfPercent = etf.percent;
         var hb = stocks[2];
         var hbPercent = hb.percent;
+        var ha = stocks[3];
 
         var hbOffset = basePercent2 - hbPercent; //2 - 1    (-2) - (-1)
         var etfOffset = basePercent - etfPercent;
@@ -63,6 +64,7 @@ class Runner1 extends AbstractRunner {
                     etf.name, etf.percentStr, Math.abs(etfOffset * 100));
             }
             this._message += utils.sprintf('%s(%s)', base.name, base.percentStr);
+            this._message += utils.sprintf('%s(%s)', ha.name, ha.percentStr);
         }
         if (this._message) {
             return true;
