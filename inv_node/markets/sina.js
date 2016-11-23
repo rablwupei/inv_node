@@ -70,6 +70,14 @@ class SinaStock extends AbstractStock{
         }
     }
 
+    get buy1lot() {
+        if (this.code.startsWith('hk')) {
+            return null;
+        } else {
+            return parseInt(this.strs[10]);
+        }
+    }
+
 }
 
 var http = require('../core/http');
