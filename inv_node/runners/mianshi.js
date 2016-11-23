@@ -27,7 +27,7 @@ class Runner1 extends AbstractRunner {
 
 
     get touser() {
-        return 'wupei|hanbihui';
+        return 'wupei';
     }
 
     *run() {
