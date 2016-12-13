@@ -21,13 +21,12 @@ class StockMonitoring extends AbstractRunner {
     }
 
     get interval() {
-        return 5;
+        return 30;
     }
 
     get sendRate() {
-        return 5;
+        return 30;
     }
-
 
     get touser() {
         return 'wupei';
@@ -42,7 +41,7 @@ class StockMonitoring extends AbstractRunner {
         var basePercent = base.percent;
 
         if (base.cur <= this._price) {
-            this._message += utils.sprintf('触发：%s(%s) %f <= %f', base.name, base.percentStr, base.cur, this._price);
+            this._message += utils.sprintf('触发：%s(%s) %f <= %f, 距离%.2f%%', base.name, base.percentStr, base.cur, this._price, (this._price - base.cur) / base.cur * 100);
         }
         if (this._message) {
             return true;
@@ -53,10 +52,10 @@ class StockMonitoring extends AbstractRunner {
     static getRunners() {
         return [
             new StockMonitoring({stockId: "sh600886", price: 6.5}),
-            new StockMonitoring({stockId: "sh600546", price: 3.75}),
             new StockMonitoring({stockId: "sz000968", price: 8.98}),
             new StockMonitoring({stockId: "sh601918", price: 3.98}),
             new StockMonitoring({stockId: "sh601818", price: 3.91}),
+            new StockMonitoring({stockId: "sz000338", price: 9.6}),
         ];
     }
 
