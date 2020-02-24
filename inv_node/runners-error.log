@@ -1,5 +1,0 @@
-2016-09-28 08:35:44 - error:  Error: stock not found. code = sz1318106
-    at Object.sina.get (/Users/wupei/dev/github/inv_node/inv_node/markets/sina.js:73:19)
-    at next (native)
-    at onFulfilled (/Users/wupei/dev/github/inv_node/inv_node/node_modules/co/index.js:65:19)
-    at process._tickCallback (internal/process/next_tick.js:103:7)
