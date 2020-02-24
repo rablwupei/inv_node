@@ -11,3 +11,5 @@
 
 /inv_node/.idea/task.xml
 /inv_node/.idea/workspace.xml
+inv_node/runners.db
+inv_node/runners-error.log
