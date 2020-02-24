@@ -22,57 +22,24 @@ var run = function* () {
     db.init('./runners.db');
 
     var runnerPath = './runners';
-    var files = yield fs.readdir(runnerPath);
-    for (var i = 0; i < files.length; i++) {
-        co(function* () {
-            var path = runnerPath + '/' + files[i];
-            while (true) {
-                try {
-                    var cls = require(path);
-                    var runner = new cls();
-                    var hasSend = yield db.hasSend(path, runner.sendRate);
-                    log("check: " + path + ", hasSend: " + hasSend);
-                    if (!hasSend) {
-                        log("run: " + path);
-                        var result = yield runner.run();
-                        if (result) {
-                            log("send: " + path);
-                            yield db.setSend(path);
-                            runner.postMessage();
-                        }
-                    }
-                } catch (err) {
-                    utils.error(err);
-                }
-                yield sleep(runner.interval * 1000);
-            }
-        }).catch(function(err) {
-            utils.error(err);
-        });
-    }
-
-
-    runnerPath = './runner_template';
-    files = yield fs.readdir(runnerPath);
-    for (var i = 0; i < files.length; i++) {
-        var path = runnerPath + '/' + files[i];
-        var cls = require(path);
-        var runners = cls.getRunners();
-
-        for (var j = 0; j < runners.length; j++) {
+    var exists = yield fs.exists(runnerPath)
+    if (exists) {
+        var files = yield fs.readdir(runnerPath);
+        for (var i = 0; i < files.length; i++) {
             co(function* () {
-                var runner = runners[j];
-                while(true) {
+                var path = runnerPath + '/' + files[i];
+                while (true) {
                     try {
-                        var id = "template_" + runner._stockId;
-                        var hasSend = yield db.hasSend(id, runner.sendRate);
-                        log("check: " + id + ", hasSend: " + hasSend);
+                        var cls = require(path);
+                        var runner = new cls();
+                        var hasSend = yield db.hasSend(path, runner.sendRate);
+                        log("check: " + path + ", hasSend: " + hasSend);
                         if (!hasSend) {
-                            log("run: " + id);
+                            log("run: " + path);
                             var result = yield runner.run();
                             if (result) {
-                                log("send: " + id);
-                                yield db.setSend(id);
+                                log("send: " + path);
+                                yield db.setSend(path);
                                 runner.postMessage();
                             }
                         }
@@ -85,7 +52,43 @@ var run = function* () {
                 utils.error(err);
             });
         }
+    }
 
+    runnerPath = './runner_template';
+    var exists = yield fs.exists(runnerPath)
+    if (exists) {
+        files = yield fs.readdir(runnerPath);
+        for (var i = 0; i < files.length; i++) {
+            var path = runnerPath + '/' + files[i];
+            var cls = require(path);
+            var runners = cls.getRunners();
+            for (var j = 0; j < runners.length; j++) {
+                co(function* () {
+                    var runner = runners[j];
+                    while (true) {
+                        try {
+                            var id = "template_" + runner._stockId;
+                            var hasSend = yield db.hasSend(id, runner.sendRate);
+                            log("check: " + id + ", hasSend: " + hasSend);
+                            if (!hasSend) {
+                                log("run: " + id);
+                                var result = yield runner.run();
+                                if (result) {
+                                    log("send: " + id);
+                                    yield db.setSend(id);
+                                    runner.postMessage();
+                                }
+                            }
+                        } catch (err) {
+                            utils.error(err);
+                        }
+                        yield sleep(runner.interval * 1000);
+                    }
+                }).catch(function (err) {
+                    utils.error(err);
+                });
+            }
+        }
     }
 };
 
